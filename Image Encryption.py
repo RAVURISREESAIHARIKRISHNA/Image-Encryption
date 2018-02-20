@@ -73,14 +73,14 @@ def encrypt(imagename,password):
         step = 3
         encimageone=[asciiciphertxt[i:i+step] for i in range(0, len(asciiciphertxt), step)]
         print(str(encimageone[len(encimageone)-1]))
-        if int(encimageone[len(encimageone)-1],16) < 100:
-            encimageone[len(encimageone)-1] += "1"
+        if int(str(encimageone[len(encimageone)-1])[2]) < 100:
+            encimageone[len(encimageone)-1] += b"1"
     
         if len(encimageone) % 3 != 0:
             while (len(encimageone) % 3 != 0):
                 encimageone.append("101")
 
-        encimagetwo=[(int(encimageone[int(i)]),int(encimageone[int(i+1)]),int(encimageone[int(i+2)])) for i in range(0, len(encimageone), step)]    
+        encimagetwo=[(int(str(encimageone[int(i)])[2]),int(str(encimageone[int(i+1)])[2]),int(str(encimageone[int(i+2)])[2])) for i in range(0, len(encimageone), step)]    
 
     
         while (int(relength) != len(encimagetwo)):
@@ -91,7 +91,7 @@ def encrypt(imagename,password):
         encim.putdata(encimagetwo)
    
     
-        enc_success(cipher_name)
+        # enc_success(cipher_name)
         
     construct_enc_image()
     
