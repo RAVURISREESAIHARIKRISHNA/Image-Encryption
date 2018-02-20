@@ -1,3 +1,4 @@
+import random
 import os
 from PIL import Image
 import PIL
@@ -49,7 +50,7 @@ def encrypt(imagename,password):
     
     
     cipher_name = imagename + ".crypt"
-    g = open(cipher_name, 'w')
+    g = open(cipher_name, 'wb')
     g.write(ciphertext)
     
     
@@ -59,8 +60,9 @@ def encrypt(imagename,password):
 
     
         def replace_all(text, dic):
-            for i, j in dic.iteritems():
-                text = text.replace(i, j)
+            text = bytes(str(text), 'utf-8')
+            for i, j in dic.items():
+                text = text.replace(str.encode(i), str.encode(j))
             return text
 
     
@@ -70,8 +72,8 @@ def encrypt(imagename,password):
     
         step = 3
         encimageone=[asciiciphertxt[i:i+step] for i in range(0, len(asciiciphertxt), step)]
-    
-        if int(encimageone[len(encimageone)-1]) < 100:
+        print(str(encimageone[len(encimageone)-1]))
+        if int(encimageone[len(encimageone)-1],16) < 100:
             encimageone[len(encimageone)-1] += "1"
     
         if len(encimageone) % 3 != 0:
@@ -126,5 +128,6 @@ def decrypt(ciphername,password):
     newim.putdata(finaltexttwo)
     newim.show()
     
-encrypt("C:\\Users\\HARI\\Desktop\\Octocat.png",hashlib.sha256('password').digest())
-print("Success")
+# password = hashlib.sha256(str(random.getrandbits(256)).encode('utf-8')).hexdigest()
+password =  " " * 16
+encrypt("C:\\Users\\HARI\\Desktop\\Octocat.png",password)
